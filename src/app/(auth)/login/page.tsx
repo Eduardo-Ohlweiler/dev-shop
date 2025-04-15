@@ -17,7 +17,7 @@ import Link from "next/link";
 
 export default function Login() {
   return (
-    <Provider>
+    <Provider >
       <Center h="100vh">
         <Fieldset.Root
           size="lg"
