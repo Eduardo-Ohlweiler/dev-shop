@@ -1,10 +1,16 @@
-import { Button, Flex, Heading, Link as ChakraLink, Menu, IconButton, Portal, Center } from "@chakra-ui/react"
+"use client"
+
+import {  Flex, Heading, Link as ChakraLink, Menu, Center, HStack, Avatar, Text, Stack, Portal } from "@chakra-ui/react"
 import Link from "next/link"
 import { ColorModeButton } from "../ui/color-mode";
 import { link } from "fs";
 import { FaBars } from "react-icons/fa";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Header = () => {
+
+    const { user, isLoged } = useAuth();
+
     return (
         <Flex 
             as = "header" 
@@ -27,19 +33,35 @@ const Header = () => {
                     <Link href="/">Sobre nós</Link>
                 </li>
             </Flex>
-            <Flex alignItems="center" gap="1rem" display={{base: "none", sm: "flex"}}>
-                <ColorModeButton />
-                <ChakraLink href="/login" as = {Link} >
-                    Login
-                </ChakraLink>
-                <ChakraLink
-                backgroundColor="#fff"
-                p="0.5rem"
-                color="#000"
-                href="/register" as = {Link}>
-                    Cadastrar
-                </ChakraLink>
-            </Flex>
+            {!user ? (
+                    <Flex alignItems="center" gap="1rem" display={{base: "none", sm: "flex"}}>
+                        <ColorModeButton />
+                        <ChakraLink href="/login" as = {Link} >
+                            Login
+                        </ChakraLink>
+                        <ChakraLink
+                        backgroundColor="#fff"
+                        p="0.5rem"
+                        color="#000"
+                        href="/register" as = {Link}>
+                            Cadastrar
+                        </ChakraLink>
+                    </Flex>
+                ) : (
+                    <HStack key={user.email} gap="4">
+                        <Avatar.Root>
+                            <Avatar.Fallback name={user.name} />
+                            <Avatar.Image src="https://i.pravatar.cc/300?u=iu" />
+                        </Avatar.Root>
+                        <Stack gap="0">
+                            <Text fontWeight="medium">{user.name}</Text>
+                            <Text color="fg.muted" textStyle="sm">
+                            {user.email}
+                            </Text>
+                        </Stack>
+                    </HStack>
+                )
+            }
             <Menu.Root>
                 <Menu.Trigger display={{base: "block", sm: "none"}}>
                     <Center >
