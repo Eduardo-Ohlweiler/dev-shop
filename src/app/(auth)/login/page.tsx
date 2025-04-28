@@ -2,6 +2,9 @@
 
 import { PasswordInput } from "@/components/ui/password-input";
 import { Provider } from "@/components/ui/provider";
+import { useAuth } from "@/contexts/AuthContext";
+import { loginSchema } from "@/schemas/auth.schemas";
+import { LoginUserData } from "@/types/auth";
 import {
   Button,
   Center,
@@ -13,12 +16,29 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
 
 export default function Login() {
+
+  const {loginUser} = useAuth();
+
+  const{
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(loginSchema),
+  });
+
+  const submitForm = (data: LoginUserData) => {
+    loginUser(data);
+  };
+
   return (
     <Provider >
-      <Center h="100vh">
+      <Center h="100vh" as = "form" onSubmit={handleSubmit(submitForm)}>
         <Fieldset.Root
           size="lg"
           maxW="md"
@@ -36,12 +56,14 @@ export default function Login() {
           <Fieldset.Content>
             <Field.Root>
               <Field.Label>Email:</Field.Label>
-              <Input name="email" type="email" borderRadius="2xl" />
+              <Input {...register("email")} borderRadius="2xl" />
+              <Text color="red.500" fontSize="14px">{errors.email?.message}</Text>
             </Field.Root>
 
             <Field.Root>
               <Field.Label>Senha:</Field.Label>
-              <PasswordInput name="password" borderRadius="2xl" />
+              <PasswordInput {...register("password")} borderRadius="2xl" />
+              <Text color="red.500" fontSize="14px">{errors.password?.message}</Text>
             </Field.Root>
           </Fieldset.Content>
           <Separator />
