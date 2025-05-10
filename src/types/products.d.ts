@@ -1,3 +1,4 @@
+import { CartCardProps } from "@/components/CartCard";
 
 export interface Product {
     id: number;
@@ -5,4 +6,12 @@ export interface Product {
     value: number;
     category_id: number;
     img_src: string;
+}
+
+export interface CartContextInterface {
+    cartList: CartCardProps[];
+    addToCart: (Product) => void;
+    removeToCart: (id) => void;
+    clearCart: () => void;
+    total: number;
 }
