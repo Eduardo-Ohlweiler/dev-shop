@@ -32,6 +32,7 @@ export default function Home() {
   
   return (
     <Center flexDir="column">
+      <Image w="100%" h="500px" bg="gray.600" src="/banner.png" ></Image>
       <Heading pt="2rem" >Bem vindo ao DevShop</Heading>
       <Group attached w="4xl" mt="2rem" >
         <Input placeholder="Buscar..." />
@@ -39,15 +40,17 @@ export default function Home() {
           <IoIosSearch />
         </Button>
       </Group>
-      <Image w="60%" h="500px" bg="gray.600" mt="2rem" src="/banner.png" ></Image>
+      
       
       <Box mt="3rem" >
         {/*<Heading textAlign="center" mb="1rem" >Categorias</Heading>*/}
         <Flex gap="2rem" >
           {
             categories?.map((item, index) => (
-                <ChakraLink as = {Link} href="/"  key={index} textAlign="center" flexDir={"column"}>
-                    <Box w="150px" h="200px" bg="gray.300" borderRadius="md" ></Box>
+                <ChakraLink as = {Link} href={`/categories/${item.id}`}  key={index} textAlign="center" flexDir={"column"} >
+                    <Box h="200px" w="150px" overflow={"hidden"} >
+                      <Image w="150px" h="200px" bg="gray.300" borderRadius="md" src={item.img_src} _hover={{transform: "scale(1.1)"}} />
+                    </Box>
                     <Text>{item.category_name}</Text>
                 </ChakraLink>
             ))

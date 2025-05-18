@@ -24,7 +24,7 @@ const Header = () => {
             </Heading>
             <Flex as = "ul" gap="1rem" display={{base: "none", sm: "flex"}} >
                 <li>
-                    <Link href="/">Categorias</Link>
+                    <Link href="/categories/all">Categorias</Link>
                 </li>
                 <li>
                     <Link href="/">Home</Link>
