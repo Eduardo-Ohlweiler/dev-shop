@@ -26,3 +26,11 @@ export const registerSchema = yup.object().shape({
         .required("Campo confirmar senha obrigatório")
         .oneOf([yup.ref("password")], "Senhas não conferem"),
 });
+
+export const loginSchema = yup.object().shape({
+    email: yup
+        .string()
+        .email("Email inválido")
+        .required("Campo email obrigatório"),
+    password: yup.string().required("Campo senha obrigatório"),
+});
